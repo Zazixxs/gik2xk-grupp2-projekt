@@ -19,7 +19,7 @@ app.use('/', require('./routes/Products'));
 app.use('/api/products', require('./routes/Products'));
 app.use('/api/product', require('./routes/Products'));
 app.use('/api/rating', require('./routes/Products'));
-
+app.use('/api/admin', require('./routes/Admin'));
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development

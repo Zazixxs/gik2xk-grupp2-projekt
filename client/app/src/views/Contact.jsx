@@ -1,5 +1,13 @@
+import '../App.css';
+import Navbar from "../components/Navbar";
+
 function Contact() {
-    return <h1>Contact Page</h1>;
-  }
+  return (
+    <div>
+      <Navbar />
+      <h1>Contact</h1>
+    </div>
+  );
+}
 
 export default Contact;

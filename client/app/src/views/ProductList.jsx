@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from "../components/ProductCard";
-
+import '../App.css';
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -17,7 +17,6 @@ function ProductList() {
         }
       });
   }, []);
-
   return (
     <div style={{ 
       display: 'grid', 

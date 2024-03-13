@@ -10,7 +10,6 @@ function Rating({ rating }) {
       return <span key={star}>☆</span>;
     }
   });
-
   return <div>{stars}</div>;
 }
 
