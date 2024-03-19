@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import Product from '../components/Product';
 import '../App.css';
+import useFetch from '../useFetch';
+import { useParams } from 'react-router-dom';
 
-
-function ProductView (){
+function ProductView({  }) {
   const { id } = useParams();
-  const [product, setProduct] = useState({});
-  
+  const { data, loading, error } = useFetch(`http://localhost:5000/api/product/${id}`);
 
-  useEffect(() => {
-    // Hämta produktinformation
-    fetch(`http://localhost:5000/product/${id}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Product from server:', data);
-        setProduct(data);
-      });
-  }, [id]);
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-  return (    
+  if (error) {
+    return <p>Error fetching data</p>;
+  }
+
+  return (
     <div>
-      { product && <Product key={product.id} product={product} />}
-    </div> )
+      {data && <Product key={data.id} product={data} />}
+    </div>
+  );
 }
 
 export default ProductView;

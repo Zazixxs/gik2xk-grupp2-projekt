@@ -1,16 +1,34 @@
 import React from 'react';
+import MuiRating from '@material-ui/lab/Rating';
 
-function Rating({ rating }) {
-  const stars = [1, 2, 3, 4, 5].map((star) => {
-    if (rating >= star) {
-      return <span key={star}>⭐</span>; 
-    } else if (rating >= star - 0.5) {
-      return <span key={star}>⭐</span>; 
-    } else {
-      return <span key={star}>☆</span>;
+function Rating({id}) {
+  const [value, setValue] = React.useState(2);
+
+  const handleChange = async (event, newValue) => {
+    setValue(newValue);
+
+    const response = await fetch(`http://localhost:5000/api/rating/post/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ratings: newValue }),
+    });
+
+    if (!response.ok) {
+      console.error('Failed to post rating');
     }
-  });
-  return <div>{stars}</div>;
+  };
+
+  return (
+    <div>
+      <MuiRating
+        name="simple-controlled"
+        value={value}
+        onChange={handleChange}
+      />
+    </div>
+  );
 }
 
 export default Rating;

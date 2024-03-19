@@ -8,11 +8,13 @@ function NavbarAdmin() {
       <div className='navbar'>
       <AppBar position="static">
         <Toolbar>
+          <h5>Admin Läge</h5>
+
           <Button color="inherit">
-            <Link to="/admin" style={{ textDecoration: 'none', color: 'inherit' }}>Products</Link>
+            <Link to="/admin" style={{ textDecoration: 'none', color: 'inherit' }}>Admin Home</Link>
           </Button>
           <Button color="inherit"> 
-            <Link to="/admin/create" style={{ textDecoration: 'none', color: 'inherit' }}>New Product</Link>
+            <Link to="post" style={{ textDecoration: 'none', color: 'inherit' }}>Add Product</Link>
           </Button>
         </Toolbar>
       </AppBar>

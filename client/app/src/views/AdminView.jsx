@@ -3,13 +3,14 @@ import ProductList from "./ProductList";
 import { Button } from "@mui/material";
 import '../App.css';
 import NavbarAdmin from "../components/NavbarAdmin";
+import ProductListAdmin from "./ProductListAdmin";
+
 function AdminView() {
 
   return (
     <div>
       <NavbarAdmin />
-      <h1>Adminläge</h1>
-      <ProductList />
+      <ProductListAdmin />
     </div>
   );
 }

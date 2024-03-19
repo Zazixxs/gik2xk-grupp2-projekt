@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
+import { AppBar, Toolbar, Button, Box, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import Cart from './Cart'; // Importera Cart-komponenten
 
 function Navbar() {
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <div className='navbar'>
@@ -17,6 +28,20 @@ function Navbar() {
           <Button color="inherit">
             <Link to="/contact" style={{ textDecoration: 'none', color: 'inherit' }}>Contact</Link>
           </Button>
+          <Button color="inherit" onClick={handleClickOpen}>
+            Cart
+          </Button>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Varukorg</DialogTitle>
+            <DialogContent>
+              <Cart />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Stäng
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Toolbar>
       </AppBar>
       </div>
