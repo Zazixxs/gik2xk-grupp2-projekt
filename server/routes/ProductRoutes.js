@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
-const app = require('../app');
 const Products = db.products;
-const Rating = db.Rating;
+const ratings = db.ratings;
 
 
 
-//PRODUCTS LISTING
+//PRODUCTS 
 router.get('/products', async (req, res, next) => {
   try {
     const products = await Products.findAll();
@@ -116,36 +115,34 @@ router.put('/update/:id', async (req, res) => {
 
 
 
-
-router.get('/rating/:productId', async (req, res) => {
-  const { productId } = req.params;
-  const product = await Product.findByPk(productId);
-  if (product) {
-    res.json({ averageRating: product.averageRating });
-  } else {
-    res.status(404).json({ error: 'Product not found' });
+router.get('/ratings/:id', async (req, res) => {
+  try {
+    const Rating = await ratings.findAll({ where: { productId: req.params.id } });
+    if (Rating && Rating.length > 0) {
+      const sum = Rating.reduce((a, b) => a + b.rating, 0);
+      const avg = sum / Rating.length;
+      res.json({ averageRating: avg });
+    } else {
+      res.json({ message: 'Det finns inget betyg för denna produkt ännu.' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while trying to fetch the rating' });
   }
 });
 
 
-router.post('/rating/post/:productId', async (req, res) => {
-  // Hämta productId och ratings från req.params och req.body
-  const { productId } = req.params;
-  const { ratings } = req.body;
 
-  // Skapa ett nytt betyg i ratings-tabellen
-  const newRating = await Rating.create({
-    productId: productId,
-    ratings: ratings,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
 
-  // Hantera fel och svara klienten
-  if (newRating) {
-    res.status(201).json({ message: 'Betyg skapat!', newRating });
-  } else {
-    res.status(500).json({ message: 'Något gick fel, försök igen.' });
+
+
+router.post('/ratings', async (req, res) => {
+  try {
+    const rating = await Ratings.create(req.body);
+    res.json(rating);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while trying to create a rating' });
   }
 });
 

@@ -1,9 +1,25 @@
-import React from 'react';
-import useFetch from '../useFetch';
+import React, { useEffect, useState } from 'react';
+import { getAll } from '../service/getService'; // Byt ut 'yourFilePath' mot den faktiska sökvägen till din getAll funktion
 import Product from '../components/Product'; 
+import Rating from '../components/Rating'; // Importera Rating-komponenten
 
 function ProductList() {
-  const { data, loading, error } = useFetch('http://localhost:5000/api/products');
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    getAll('/api/products')
+      .then(products => {
+        setData(products);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err);
+        setLoading(false);
+      });
+  }, []);
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -27,14 +43,13 @@ function ProductList() {
       >
         {Array.isArray(data) &&
           data.map((product) => (
-            <Product key={product.id} product={product} />
+            <>
+              <Product key={product.id} product={product} />
+            </>
           ))}
       </div>
     </>
   );
-  
-  
-  
 }
 
 export default ProductList;

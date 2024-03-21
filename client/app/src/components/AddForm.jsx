@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css';
-import useMutate from '../useMutate';
+import { createProduct } from '../service/PostService'; // Byt ut 'yourFilePath' mot den faktiska sökvägen till din createProduct funktion
 import { Button } from '@mui/material';
 
 function AddForm() {
@@ -8,11 +8,6 @@ function AddForm() {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [imageUrl, setImageUrl] = useState('');
-
-  const { mutate, isLoading, isError } = useMutate({
-    method: 'post',
-    url: 'http://localhost:5000/api/post',
-  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,7 +19,7 @@ function AddForm() {
     };
   
     try {
-      const data = await mutate(product);
+      const data = await createProduct(product);
       console.log('Product created:', data);
     } catch (error) {
       console.error('Error:', error);
@@ -41,7 +36,7 @@ function AddForm() {
     <div>
       <h2 style={{padding: "1.5rem"}}>Add New Product</h2>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1em' }}>
-        <label htmlFor="titel">Titel:</label> // Och här
+        <label htmlFor="titel">Titel:</label>
         <input
           type="text"
           id="titel" 

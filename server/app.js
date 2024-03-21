@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(morgan('dev'));
 
+
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', 'http://localhost:5000');
   res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
@@ -20,9 +21,9 @@ app.use(function(req, res, next) {
 });
 
 
-app.use('/api', require('./routes/ProductsRoutes'));
+app.use('/api', require('./routes/ProductRoutes'));
 app.use('/api', require('./routes/CartRoutes'));
-app.use('/api', require('./routes/LoginRoutes'));
+app.use('/api', require('./routes/UsersRoutes'));
 
 
 app.use(function(err, req, res, next) {

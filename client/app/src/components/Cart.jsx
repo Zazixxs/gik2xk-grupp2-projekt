@@ -1,57 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import useFetch from '../useFetch';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
+import axios from 'axios';
 
-function Cart() {
-    const { data: items, isLoading, isError, refetch } = useFetch('/api/cart');
-    const [open, setOpen] = useState(false);
+function Cart({ userId }) {
+  const [cart, setCart] = useState([]);
 
-    const removeFromCart = async (itemId) => {
-        const response = await fetch(`/api/cart/${itemId}`, { method: 'DELETE' });
-        if (response.ok) {
-            refetch();
-        }
+  useEffect(() => {
+    const fetchCart = async () => {
+      const response = await axios.get(`/user/${userId}/getCart`);
+      setCart(response.data);
     };
 
-    const calculateTotal = () => {
-        return items.reduce((total, item) => total + item.price * item.amount, 0);
-    };
+    fetchCart();
+  }, [userId]);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+  const addToCart = async (productId, amount) => {
+    await axios.post('/cart/addProduct', { userId, productId, amount });
+    const response = await axios.get(`/user/${userId}/getCart`);
+    setCart(response.data);
+  };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    if (isLoading) return <div>Loading...</div>;
-    if (isError) return <div>Error loading cart.</div>;
-
-    return (
-        <div>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Visa varukorg
-            </Button>
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Varukorg</DialogTitle>
-                <DialogContent>
-                    {items.map(item => (
-                        <div key={item.id}>
-                            <p>{item.name} - {item.amount} st</p>
-                            <Button onClick={() => removeFromCart(item.id)}>Ta bort</Button>
-                        </div>
-                    ))}
-                    <p>Totalt: {calculateTotal()} kr</p>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Stäng
-                    </Button>
-                </DialogActions>
-            </Dialog>
+  return (
+    <div>
+      <h1>Varukorg</h1>
+      {cart.map((item) => (
+        <div key={item.id}>
+          <h2>{item.name}</h2>
+          <p>{item.price}</p>
+          <button onClick={() => addToCart(item.id, 1)}>Lägg till i varukorgen</button>
         </div>
-    );
+      ))}
+    </div>
+  );
 }
 
 export default Cart;

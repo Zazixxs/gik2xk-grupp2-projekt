@@ -1,11 +1,26 @@
-import React from 'react';
-import useFetch from '../useFetch';
-import Navbar from '../components/Navbar';
-import ProductAdmin from '../components/ProductAdmin'; // Importera Product-komponenten
+import React, { useEffect, useState } from 'react';
+import '../App.css';
+import ProductAdmin from '../components/ProductAdmin'; 
+import { getAll } from '../service/getService';
 
 function ProductListAdmin() {
-  const { data, loading, error } = useFetch('http://localhost:5000/api/products');
-  if (loading) {
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    getAll('/api/products')
+      .then(products => {
+        setProducts(products);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        setError(err);
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
     return <p>Loading...</p>;
   }
 
@@ -18,7 +33,7 @@ function ProductListAdmin() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', // Ändra här för att justera bredden på korten
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
           gap: '20px',
           justifyContent: 'center',
           padding: '2rem',
@@ -26,16 +41,13 @@ function ProductListAdmin() {
           boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
         }}
       >
-        {Array.isArray(data) &&
-          data.map((product) => (
+        {Array.isArray(products) &&
+          products.map((product) => (
             <ProductAdmin key={product.id} product={product} />
           ))}
       </div>
     </>
   );
-  
-  
-  
 }
 
 export default ProductListAdmin;

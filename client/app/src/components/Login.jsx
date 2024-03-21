@@ -1,30 +1,23 @@
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
-import AuthContext from './AuthContext'; // Importera AuthContext
+import UserContext from './UserContext';
 
 function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const { setUserId } = useContext(AuthContext); // Använd setUserId från AuthContext
+  const [userId, setUserId] = useState('');
+  const { setUser } = useContext(UserContext);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const response = await axios.post('http://localhost:5000/api/login', {
-      username,
-      password,
-    });
-
-    localStorage.setItem('token', response.data.token);
-    setUserId(response.data.userId); // Sätt userId när användaren loggar in
+  const handleLogin = () => {
+    // Här kan du lägga till logik för att validera userId om du vill
+    setUser(userId);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-      <button type="submit">Logga in</button>
-    </form>
+    <div>
+      <label>
+        UserId:
+        <input type="text" value={userId} onChange={e => setUserId(e.target.value)} />
+      </label>
+      <button onClick={handleLogin}>Logga in</button>
+    </div>
   );
 }
 

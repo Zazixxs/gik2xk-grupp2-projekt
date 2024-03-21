@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
-import useMutate from '../useMutate';
-import useFetch from '../useFetch';
+import {updateProduct } from '../service/PostService';
+import { getProduct } from '../service/getService'; 
 import { Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
 function UpdateForm() {
   const { id } = useParams();
-  const { data: product, isLoading, isError } = useFetch(`http://localhost:5000/api/product/${id}`);
-  const { mutate, isLoading: isMutating, isError: isMutateError } = useMutate({
-    method: 'put',
-    url: `http://localhost:5000/api/update/${id}`,
-  });
+  const [product, setProduct] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const [titel, setTitel] = useState('');
   const [description, setDescription] = useState('');
@@ -19,13 +17,22 @@ function UpdateForm() {
   const [imageUrl, setImageUrl] = useState('');
 
   useEffect(() => {
-    if (product) {
-      setTitel(product.titel);
-      setDescription(product.description);
-      setPrice(product.price);
-      setImageUrl(product.imageUrl);
-    }
-  }, [product]);
+    getProduct(id)
+      .then(product => {
+        setProduct(product);
+        setIsLoading(false);
+        if (product) {
+          setTitel(product.titel);
+          setDescription(product.description);
+          setPrice(product.price);
+          setImageUrl(product.imageUrl);
+        }
+      })
+      .catch(err => {
+        setError(err);
+        setIsLoading(false);
+      });
+  }, [id]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -37,7 +44,7 @@ function UpdateForm() {
     };
   
     try {
-      const data = await mutate(updatedProduct);
+      const data = await updateProduct(id, updatedProduct);
       console.log('Product updated:', data);
     } catch (error) {
       console.error('Error:', error);
@@ -48,7 +55,7 @@ function UpdateForm() {
     return <p>Loading...</p>;
   }
 
-  if (isError) {
+  if (error) {
     return <p>Error fetching data</p>;
   }
 
@@ -58,7 +65,7 @@ function UpdateForm() {
 
   return (
     <div>
-      <h2 style={{padding: "1.5rem"}}>Uppdate New Product</h2>
+      <h2 style={{padding: "1.5rem"}}>Update New Product</h2>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1em' }}>
         <label htmlFor="titel">Titel:</label>
         <input
