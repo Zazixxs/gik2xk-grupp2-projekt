@@ -43,9 +43,7 @@ function ProductList() {
       >
         {Array.isArray(data) &&
           data.map((product) => (
-            <>
-              <Product key={product.id} product={product} />
-            </>
+            <Product key={product.id} product={product} />
           ))}
       </div>
     </>

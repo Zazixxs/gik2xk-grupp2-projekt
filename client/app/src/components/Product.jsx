@@ -10,7 +10,7 @@ function Product({ product: initialProduct }) {
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const userId = 2;
+  const userId = 1;
 
   useEffect(() => {
     getProduct(initialProduct.id)
