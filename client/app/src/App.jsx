@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import UserContext from './components/UserContext';
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from "./views/Home";
@@ -11,10 +10,8 @@ import AddView from './views/AddView';
 import UpdateView from './views/UpdateView';
 
 function App() {
-  const [userId, setUserId] = useState(null);
 
   return (
-    <UserContext.Provider value={{ userId, setUserId }}>
       <Router>
         <Navbar />
         <Routes>  
@@ -27,7 +24,6 @@ function App() {
           <Route path="/update/:id" element={<UpdateView />} />
         </Routes>
       </Router>
-    </UserContext.Provider>
   );
 }
 

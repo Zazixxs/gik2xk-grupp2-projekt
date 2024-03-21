@@ -5,6 +5,12 @@ import '../App.css';
 function CartComponent({ userId }) {
     const [cartItems, setCartItems] = useState([]);
 
+
+// HÄR KAN MAN STÄLLA IN VILKE USER SOM SKA HA TILLGÅNG TILL VARUKORGEN
+    userId = 1;
+
+
+
     useEffect(() => {
         fetchCartItems();
     }, []);

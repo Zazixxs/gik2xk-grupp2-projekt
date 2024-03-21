@@ -60,3 +60,14 @@ form{
   background-color: #ccc;
   color: white;
 }
+
+.ratingform{
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9;
+  color: black;
+}
+
+

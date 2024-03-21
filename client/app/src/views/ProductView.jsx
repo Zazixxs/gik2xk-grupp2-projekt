@@ -3,6 +3,7 @@ import Product from '../components/Product';
 import '../App.css';
 import { getProduct } from '../service/getService';
 import { useParams } from 'react-router-dom';
+import AddRating from '../components/AddRating';
 
 function ProductView() {
   const { id } = useParams();
@@ -31,9 +32,12 @@ function ProductView() {
   }
 
   return (
+    <>
     <div>
       {product && <Product key={product.id} product={product} />}
     </div>
+    <AddRating productId={id} />
+    </>
   );
 }
 

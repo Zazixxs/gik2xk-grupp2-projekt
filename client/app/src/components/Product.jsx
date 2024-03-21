@@ -1,27 +1,36 @@
-// Product.jsx
-import { Button } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import { getProduct } from '../service/getService';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { getProduct, getAllRatings } from '../service/getService';
 import { addProductToCart } from '../service/cartService';
-import Rating from './Rating'; // Import Rating component
+import Rating from './Rating';
+import { Button } from "@mui/material";
+import { Link } from 'react-router-dom';
+import '../App.css';
 
 function Product({ product: initialProduct }) {
   const [product, setProduct] = useState(null);
+  const [rating, setRating] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const userId = 1;
+
 
   useEffect(() => {
-    getProduct(initialProduct.id)
-      .then(product => {
+    const fetchData = async () => {
+      try {
+        const product = await getProduct(initialProduct.id);
+        const ratings = await getAllRatings(initialProduct.id);
+        if (ratings && ratings.length > 0) {
+          const sum = ratings.reduce((a, b) => a + b.rating, 0);
+          const avg = sum / ratings.length;
+          setRating(avg);
+        }
         setProduct(product);
         setIsLoading(false);
-      })
-      .catch(err => {
+      } catch (err) {
         setError(err);
         setIsLoading(false);
-      });
+      }
+    };
+    fetchData();
   }, [initialProduct.id]);
 
   const handleAddToCart = async () => {
@@ -49,7 +58,6 @@ function Product({ product: initialProduct }) {
   return (
     <>
       <div className="product">
-        
         <Link to={`/product/${product.id}`}>
           <h2 style={{ marginBottom: '1rem' }}>{product.titel}</h2>
           <img src={product.imageUrl} alt={product.titel} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '5px' }} />
@@ -57,6 +65,7 @@ function Product({ product: initialProduct }) {
           <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>{product.price} kr</p>
         </Link>
         <Button variant="contained" color="primary" onClick={handleAddToCart}>Lägg till i varukorgen</Button>
+        <Rating id={initialProduct.id} />
       </div>
     </>
   );

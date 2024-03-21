@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 const Products = db.products;
-const ratings = db.ratings;
+const Ratings = db.ratings;
 
 
 
@@ -116,10 +116,11 @@ router.put('/update/:id', async (req, res) => {
 
 
 router.get('/ratings/:id', async (req, res) => {
+  const { id } = req.params;
   try {
-    const Rating = await ratings.findAll({ where: { productId: req.params.id } });
+    const Rating = await Ratings.findAll({ where: { productId : id } });
     if (Rating && Rating.length > 0) {
-      const sum = Rating.reduce((a, b) => a + b.rating, 0);
+      const sum = Rating.reduce((a, b) => a + b.ratings, 0); // Ändrade här
       const avg = sum / Rating.length;
       res.json({ averageRating: avg });
     } else {
@@ -131,19 +132,26 @@ router.get('/ratings/:id', async (req, res) => {
   }
 });
 
-
-
-
-
-
-router.post('/ratings', async (req, res) => {
-  try {
-    const rating = await Ratings.create(req.body);
-    res.json(rating);
+router.post('/ratings/:id', async (req, res) => {
+  const { id } = req.params;
+  const { ratings } = req.body
+    try {
+    await Ratings.create({
+      productId: id,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      ratings: ratings
+    });
+    
+    res.status(200).json({ message: 'Betyget har sparats.' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'An error occurred while trying to create a rating' });
+    console.error('Failed to post rating:', error);
+    res.status(500).json({ message: 'Något gick fel, försök igen.' });
   }
 });
+
+
+
+
 
 module.exports = router;

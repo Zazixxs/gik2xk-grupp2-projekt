@@ -1,5 +1,4 @@
-import '../App.css';
-
+import React, { useContext, useState } from 'react';
 
 function Home() {
   return (

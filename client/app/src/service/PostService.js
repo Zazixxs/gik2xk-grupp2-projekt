@@ -47,7 +47,7 @@ export const createProduct = async (productData) => {
 
 export const postRating = async (id, rating) => {
   try {
-    const response = await axios.post(`/api/rating/post/${id}`, { ratings: rating });
+    const response = await axios.post(`/api/ratings/${id}`, { rating });
     if (response.status === 200) {
       return response.data;
     } else {
@@ -55,7 +55,7 @@ export const postRating = async (id, rating) => {
       return null;
     }
   } catch (error) {
-    console.error(`Error posting rating for product with id ${id}: `, error);
+    console.error('Failed to post rating:', error);
     return null;
   }
-};
+}
