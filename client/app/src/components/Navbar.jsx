@@ -1,7 +1,7 @@
 // Navbar.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Button, Box, IconButton, Badge, Dialog } from '@mui/material';
+import { AppBar, Toolbar, Button, Box, IconButton, Dialog } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartComponent from './CartComponet';
 
@@ -32,9 +32,7 @@ function Navbar() {
                           <Link to="/contact" style={{ textDecoration: 'none', color: 'inherit' }}>Contact</Link>
                       </Button>
                       <IconButton color="inherit" onClick={handleOpen}>
-                          <Badge badgeContent={4} color="error">
                               <ShoppingCartIcon />
-                          </Badge>
                       </IconButton>
                       <Dialog open={open} onClose={handleClose}>
                           <CartComponent userId={1} />
