@@ -12,7 +12,6 @@ function Home() {
         <Button variant="contained" color="primary">Se alla produkter</Button>
       </Link>
       <div className="home-image">
-        {/* Du kan lägga till en bakgrundsbild här för att göra sidan mer visuellt tilltalande */}
       </div>
     </div>
   );

@@ -4,6 +4,8 @@ import '../App.css';
 import { getProduct } from '../service/getService';
 import { useParams } from 'react-router-dom';
 import AddRating from '../components/AddRating';
+import { Rating } from '@material-ui/lab';
+import RatingsList from '../components/RatingsList';
 
 function ProductView() {
   const { id } = useParams();
@@ -37,6 +39,7 @@ function ProductView() {
       {product && <Product key={product.id} product={product} />}
     </div>
     <AddRating productId={id} />
+    <RatingsList id={id} />
     </>
   );
 }

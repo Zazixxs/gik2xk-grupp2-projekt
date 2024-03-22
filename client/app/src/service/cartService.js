@@ -50,7 +50,6 @@ export const addToCart = async (userId, productId, amount = 1) => {
 
 export const removeFromCart = async (userId, productId) => {
   try {
-    // Step 1: Fetch the current cart for the user
     const cart = await getCart(userId);
     console.log(cart);
     console.log(userId, productId);
@@ -58,7 +57,7 @@ export const removeFromCart = async (userId, productId) => {
     return getCart(userId);
   } catch (error) {
     console.error('An error occurred while removing the product from the cart:', error);
-    throw error; // Optionally re-throw the error for the caller to handle
+    throw error;
   }
 };
 

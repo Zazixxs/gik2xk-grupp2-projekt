@@ -13,7 +13,7 @@ router.get('/products', async (req, res, next) => {
     res.json(products);
   } catch (err) {
     console.error(err);
-    next(err); // Skicka felmeddelandet till Express för hantering
+    next(err);
   }
 });
 
@@ -43,7 +43,7 @@ router.post('/post', async (req, res) => {
     const now = new Date().toISOString();
 
     const product = await Products.create({
-      titel: titel, // Ändra 'title' till 'titel'
+      titel: titel,
       description,
       price,
       imageUrl,
@@ -120,9 +120,9 @@ router.get('/ratings/:id', async (req, res) => {
   try {
     const Rating = await Ratings.findAll({ where: { productId : id } });
     if (Rating && Rating.length > 0) {
-      const sum = Rating.reduce((a, b) => a + b.ratings, 0); // Ändrade här
+      const sum = Rating.reduce((a, b) => a + b.ratings, 0);
       const avg = sum / Rating.length;
-      res.json({ averageRating: avg });
+      res.json({ averageRating: avg, allRatings: Rating });
     } else {
       res.json({ message: 'Det finns inget betyg för denna produkt ännu.' });
     }
@@ -131,6 +131,9 @@ router.get('/ratings/:id', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while trying to fetch the rating' });
   }
 });
+
+
+
 
 router.post('/ratings/:id', async (req, res) => {
   const { id } = req.params;
