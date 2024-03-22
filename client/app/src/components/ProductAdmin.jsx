@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Rating from "./Rating";
-import { deleteProduct, updateProduct } from '../service/PostService'; // Byt ut 'yourFilePath' mot den faktiska sökvägen till dina funktioner
+import { deleteProduct, updateProduct } from '../service/ProductService'; // Byt ut 'yourFilePath' mot den faktiska sökvägen till dina funktioner
 import { getProduct } from '../service/getService';
 import { useNavigate, Link } from "react-router-dom";
 import '../App.css';

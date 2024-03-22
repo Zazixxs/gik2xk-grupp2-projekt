@@ -7,7 +7,7 @@ function CartComponent({ userId }) {
 
 
 // HÄR KAN MAN STÄLLA IN VILKE USER SOM SKA HA TILLGÅNG TILL VARUKORGEN
-    userId = 1;
+    userId = 2;
 
 
 

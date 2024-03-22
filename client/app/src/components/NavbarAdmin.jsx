@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Button, Box } from '@mui/material';
+import '../App.css';
+
 
 function NavbarAdmin() {
   return (
@@ -11,10 +13,10 @@ function NavbarAdmin() {
           <h5>Admin Läge</h5>
 
           <Button color="inherit">
-            <Link to="/admin" style={{ textDecoration: 'none', color: 'inherit' }}>Admin Home</Link>
+            <Link to="/admin">Admin Home</Link>
           </Button>
           <Button color="inherit"> 
-            <Link to="post" style={{ textDecoration: 'none', color: 'inherit' }}>Add Product</Link>
+            <Link to="post">Add Product</Link>
           </Button>
         </Toolbar>
       </AppBar>

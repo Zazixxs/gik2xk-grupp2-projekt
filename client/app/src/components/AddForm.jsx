@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css';
-import { createProduct } from '../service/PostService'; // Byt ut 'yourFilePath' mot den faktiska sökvägen till din createProduct funktion
+import { createProduct } from '../service/ProductService'; // Byt ut 'yourFilePath' mot den faktiska sökvägen till din createProduct funktion
 import { Button } from '@mui/material';
 
 function AddForm() {
@@ -35,7 +35,7 @@ function AddForm() {
   return (
     <div>
       <h2 style={{padding: "1.5rem"}}>Add New Product</h2>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1em' }}>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="titel">Titel:</label>
         <input
           type="text"
@@ -43,7 +43,6 @@ function AddForm() {
           value={titel}
           onChange={(e) => setTitel(e.target.value)}
           required
-          style={{ height: '2em', fontSize: '1.2em' }}
         />
 
         <label htmlFor="description">Description:</label>
@@ -52,7 +51,6 @@ function AddForm() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
-          style={{ height: '4em', fontSize: '1.2em' }}
         />
 
         <label htmlFor="price">Price:</label>
@@ -62,7 +60,6 @@ function AddForm() {
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           required
-          style={{ height: '2em', fontSize: '1.2em' }}
         />
 
         <label htmlFor="imageUrl">Image URL:</label>
@@ -72,10 +69,9 @@ function AddForm() {
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
           required
-          style={{ height: '2em', fontSize: '1.2em' }}
         />
 
-        <Button type="submit" style={{ height: '2em', fontSize: '1.2em' }}>Add Product</Button>
+        <Button type="submit">Add Product</Button>
       </form>
     </div>
   );

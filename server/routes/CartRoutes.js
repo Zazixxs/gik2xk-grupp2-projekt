@@ -22,7 +22,7 @@ router.post('/cart/addProduct', async (req, res) => {
             amount: amount
         });
 
-        res.status(200).send('Produkten har lagts till i varukorgen');
+        res.status(201).send('Produkten har lagts till i varukorgen');
     } catch (error) {
         res.status(500).send('Ett fel uppstod när produkten skulle läggas till i varukorgen');
     }

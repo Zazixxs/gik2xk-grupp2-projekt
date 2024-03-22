@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
-import {updateProduct } from '../service/PostService';
+import {updateProduct } from '../service/ProductService';
 import { getProduct } from '../service/getService'; 
 import { Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
@@ -74,7 +74,6 @@ function UpdateForm() {
           value={titel}
           onChange={(e) => setTitel(e.target.value)}
           required
-          style={{ height: '2em', fontSize: '1.2em' }}
         />
 
         <label htmlFor="description">Description:</label>
@@ -83,7 +82,6 @@ function UpdateForm() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
-          style={{ height: '4em', fontSize: '1.2em' }}
         />
 
         <label htmlFor="price">Price:</label>
@@ -93,7 +91,6 @@ function UpdateForm() {
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           required
-          style={{ height: '2em', fontSize: '1.2em' }}
         />
 
         <label htmlFor="imageUrl">Image URL:</label>
@@ -103,10 +100,9 @@ function UpdateForm() {
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
           required
-          style={{ height: '2em', fontSize: '1.2em' }}
         />
 
-        <Button type="submit" style={{ height: '2em', fontSize: '1.2em' }}>Update Product</Button>
+        <Button type="submit">Update Product</Button>
       </form>
     </div>
   );

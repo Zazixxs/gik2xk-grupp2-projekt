@@ -17,7 +17,7 @@ h1 {
 
 a {
   text-decoration: none;
-  color: black;
+  color: inherit
 }
 
 form{
@@ -71,3 +71,34 @@ form{
 }
 
 
+h2 {
+  padding: 1.5rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  height: 2em;
+  font-size: 1.2em;
+}
+
+textarea {
+  height: 4em;
+}
+
+button[type="submit"] {
+  color: white;
+  background-color: green;
+}
+
+
+p {
+  font-weight: bold;
+  font-size: 1.2rem; 
+}

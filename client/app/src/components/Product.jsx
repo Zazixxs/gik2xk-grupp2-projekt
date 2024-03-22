@@ -11,7 +11,7 @@ function Product({ product: initialProduct }) {
   const [rating, setRating] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const userId = 2;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,10 +59,10 @@ function Product({ product: initialProduct }) {
     <>
       <div className="product">
         <Link to={`/product/${product.id}`}>
-          <h2 style={{ marginBottom: '1rem' }}>{product.titel}</h2>
+          <h2>{product.titel}</h2>
           <img src={product.imageUrl} alt={product.titel} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '5px' }} />
-          <p style={{ marginTop: '1rem', marginBottom: '0.5rem' }}>{product.description}</p>
-          <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>{product.price} kr</p>
+          <p >{product.description}</p>
+          <p>{product.price} kr</p>
         </Link>
         <Button variant="contained" color="primary" onClick={handleAddToCart}>Lägg till i varukorgen</Button>
         <Rating id={initialProduct.id} />
