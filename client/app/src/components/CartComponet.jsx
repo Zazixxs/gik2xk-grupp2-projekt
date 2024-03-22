@@ -4,12 +4,10 @@ import '../App.css';
 
 function CartComponent({ userId }) {
     const [cartItems, setCartItems] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
 
-
-// HÄR KAN MAN STÄLLA IN VILKE USER SOM SKA HA TILLGÅNG TILL VARUKORGEN
+    // HÄR KAN MAN STÄLLA IN VILKE USER SOM SKA HA TILLGÅNG TILL VARUKORGEN
     userId = 2;
-
-
 
     useEffect(() => {
         fetchCartItems();
@@ -17,8 +15,9 @@ function CartComponent({ userId }) {
 
     const fetchCartItems = async () => {
         const cart = await getCart(userId);
-        if (cart) {
-            setCartItems(cart);
+        if (cart && cart.products) {
+            setCartItems(cart.products);
+            setTotalPrice(cart.total);
         }
     };
 
@@ -26,14 +25,16 @@ function CartComponent({ userId }) {
         <div className='cart'>
             <h2>Varukorg</h2>
             <p>{cartItems.length} produkter i varukorgen</p>
-            {cartItems.map((item) => ( 
-                console.log(item.id),
+            <p>Totalt pris: {totalPrice}</p>
+            {cartItems.map((item) => (
                 <div key={item.id}>
                     <p>Produkt ID: {item.titel}</p>
                    <button onClick={async () => {
                     const updatedCart = await removeFromCart(userId, item.id);
-                    console.log(item.id);
-                     setCartItems(updatedCart);
+                     if (updatedCart && updatedCart.products) {
+                        setCartItems(updatedCart.products);
+                        setTotalPrice(updatedCart.total);
+                     }
                      }}>Ta bort produkt</button>
                 </div>
             ))}

@@ -42,15 +42,18 @@ router.get('/cart/:userId', async (req, res) => {
         }
         const cartRows = await cart_row.findAll({ where: { cartId: userCart.id } });
         const productsInCart = [];
+        let totalPrice = 0;
         for (let row of cartRows) {
             const product = await products.findByPk(row.productId);
             productsInCart.push(product);
+            totalPrice += row.amount;
         }
-        res.status(200).json(productsInCart);
+        res.status(200).json({ products: productsInCart, total: totalPrice });
     } catch (error) {
         res.status(500).send('Ett fel uppstod när produkterna skulle hämtas från varukorgen');
     }
 });
+
 
 router.delete('/cart/:userId/:productId', async (req, res) => {
     const { userId, productId } = req.params;
