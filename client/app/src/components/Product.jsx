@@ -3,7 +3,7 @@ import { getProduct, getAllRatings } from '../service/getService';
 import { addProductToCart } from '../service/cartService';
 import Rating from './Rating';
 import { Button } from "@mui/material";
-import { Link } from 'react-router-dom';
+import { Link,useLocation} from 'react-router-dom';
 import '../App.css';
 
 function Product({ product: initialProduct }) {
@@ -11,7 +11,11 @@ function Product({ product: initialProduct }) {
   const [rating, setRating] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  //Här ändrar vi också user för att testa att lägga till produkter i varukorgen
   const userId = 2;
+ 
+  const location = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,8 +64,8 @@ function Product({ product: initialProduct }) {
       <div className="product">
         <Link to={`/product/${product.id}`}>
           <h2>{product.titel}</h2>
-          <img src={product.imageUrl} alt={product.titel} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '5px' }} />
-          <p >{product.description}</p>
+          <img src={`/${product.imageUrl}.jpg`} alt={product.titel} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '5px' }} />
+          {location.pathname === `/product/${product.id}` && <p>{product.description}</p>}
           <p>{product.price} kr</p>
         </Link>
         <Button variant="contained" color="primary" onClick={handleAddToCart}>Lägg till i varukorgen</Button>

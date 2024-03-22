@@ -57,7 +57,7 @@ function ProductAdmin({ product: initialProduct }) {
       <div className="product">
         <Link to={`/product/${product.id}`}>
           <h2>{product.titel}</h2>
-          <img src={product.imageUrl} alt={product.titel} />
+          <img src={`/${product.imageUrl}.jpg`} alt={product.titel} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '5px' }} />
           <p> {product.description}</p>
           <p>{product.price} kr</p>
         </Link>

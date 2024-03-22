@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css';
-import { createProduct } from '../service/ProductService'; // Byt ut 'yourFilePath' mot den faktiska sökvägen till din createProduct funktion
+import { createProduct } from '../service/ProductService';
 import { Button } from '@mui/material';
 
 function AddForm() {

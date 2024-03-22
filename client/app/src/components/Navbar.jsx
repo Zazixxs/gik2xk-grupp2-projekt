@@ -36,9 +36,6 @@ function Navbar() {
                       </IconButton>
                       <Dialog open={open} onClose={handleClose}>
 
-
-
-
                           <CartComponent userId={1} />
                       </Dialog>
                   </Toolbar>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getAll } from '../service/getService'; // Byt ut 'yourFilePath' mot den faktiska sökvägen till din getAll funktion
+import { getAll } from '../service/getService';
 import Product from '../components/Product'; 
-import Rating from '../components/Rating'; // Importera Rating-komponenten
 
 function ProductList() {
   const [data, setData] = useState([]);
@@ -37,7 +36,6 @@ function ProductList() {
           gap: '20px',
           justifyContent: 'center',
           padding: '2rem',
-          backgroundColor: '#f9f9f9',
           boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
         }}
       >
